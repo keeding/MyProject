@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="processDefinition" namespace="/" extends="common">
+		<action name="processDefinitionAction_*" class="processDefinitionAction" method="{1}">
+			<interceptor-ref name="defaultStack">
+<!--                 <param name="fileUpload.allowedTypes">text/plain,application/vnd.ms-powerpoint,application/zip</param> -->
+<!--                 <param name="fileUpload.allowedExtensions">.txt,.ppt,.zip</param> -->
+                <param name="fileUpload.maximumSize">500000000</param>
+                <param name="fileUpload.allowedTypes">application/zip</param>
+                <param name="fileUpload.allowedExtensions">.zip</param>
+            </interceptor-ref>
+            
+			<result name="list">/WEB-INF/pages/workflow/processdefinition_list.jsp</result>
+			<result name="toList" type="redirectAction">processDefinitionAction_list</result>
+			<result name="viewpng" type="stream">
+				<param name="contentType">image/png</param>
+				<param name="inputName">pngStream</param>
+<!-- 				<param name="contentDisposition">attachment;filename="document.pdf"</param> -->
+<!-- 				<param name="bufferSize">1024</param> -->
+			</result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="processInstance" namespace="/" extends="common">
+		<action name="processInstanceAction_*" class="processInstanceAction" method="{1}">
+			<result name="list">/WEB-INF/pages/workflow/processinstance.jsp</result>
+			<result name="showPng">/WEB-INF/pages/workflow/image.jsp</result>
+			<result name="viewImage" type="stream">
+				<param name="contentType">image/png</param>
+				<param name="inputName">imgStream</param>
+			</result>
+		</action>
+	</package>
+</struts>

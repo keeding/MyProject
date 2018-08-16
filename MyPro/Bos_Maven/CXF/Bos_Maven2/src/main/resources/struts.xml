@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.devMode" value="true"></constant>
+	<constant name="struts.ui.theme" value="simple"></constant>
+	<constant name="struts.objectFactory" value="spring"/>
+	<constant name="struts.configuration.xml.reload" value="true"/>
+	<constant name="struts.serve.static.browserCache" value="false"/>
+	<constant name="struts.custom.i18n.resources" value="message"></constant>
+	<package name="common" namespace="/" extends="struts-default">
+		<interceptors>
+			<interceptor name="loginInterceptor" class="com.wqp.bos.web.interceptor.LoginInterceptor"></interceptor>
+			<interceptor-stack name="loginStack">
+				<interceptor-ref name="defaultStack">
+					<param name="fileUpload.allowedExtensions">.xls,.xlsx</param>
+				</interceptor-ref>
+				<interceptor-ref name="loginInterceptor">
+					<param name="excludeMethods">login</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="loginStack"></default-interceptor-ref>
+		<default-action-ref name="error"></default-action-ref>
+		<global-results>
+			<result name="login">/login.jsp</result>
+			<result name="index">/index.jsp</result>
+			<result name="error">/error.jsp</result>
+<!-- 			<result name="input">/error.jsp</result> -->
+			<result name="unauthorizedUrl">/unauthorizedUrl.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="unauthorizedUrl" exception="org.apache.shiro.authz.AuthorizationException"></exception-mapping>
+		</global-exception-mappings>
+		<action name="page_*_*">
+			<result>/WEB-INF/pages/{1}/{2}.jsp</result>
+		</action>
+		<action name="error">
+			<result>/error.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 3 加载其他配置文件 -->
+	<include file="config/struts-task.xml"></include>
+	<include file="config/struts-processDefinition.xml"></include>
+	<include file="config/struts-processInstance.xml"></include>
+	<include file="config/struts-workordermanage.xml"></include>
+	<include file="config/struts-noticebill.xml"></include>
+	<include file="config/struts-decidedzone.xml"></include>
+	<include file="config/struts-subarea.xml"></include>
+	<include file="config/struts-user.xml"></include>
+	<include file="config/struts-staff.xml"></include>
+	<include file="config/struts-region.xml"></include>
+	<include file="config/struts-function.xml"></include>
+	<include file="config/struts-role.xml"></include>
+</struts>
